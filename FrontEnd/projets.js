@@ -27,3 +27,49 @@ function genererProjets(projets) {
 
 genererProjets(projets);
 
+// Boutons
+
+// Bouton 'TOUS' 
+// On sélectionne la balise du bouton
+const boutonReset = document.querySelector(".f-1");
+
+//On ajoute une eventListener sur le bouton puis on appel la fonction genererProjets sur la liste de base
+boutonReset.addEventListener("click", function () {
+    document.querySelector(".gallery").innerHTML = "";
+    genererProjets(projets);
+});
+
+// Filtrage par catégorie
+// Objets : f-2
+// On sélectionne la balise du bouton
+const boutonObjets = document.querySelector(".f-2");
+
+// on ajoute un eventListener sur le bouton puis on filtre sur la catégorie désirée les projet pour les afficher
+boutonObjets.addEventListener("click", function () {
+    const objets = projets.filter(projet => projet.categoryId === 1);
+    document.querySelector(".gallery").innerHTML = "";
+    genererProjets(objets);
+});
+
+// Appartements : f-3
+// On sélectionne la balise du bouton
+const boutonApparts = document.querySelector(".f-3");
+
+// on ajoute un eventListener sur le bouton puis on filtre sur la catégorie désirée les projet pour les afficher
+boutonApparts.addEventListener("click", function () {
+    const objets = projets.filter(projet => projet.categoryId === 2);
+    document.querySelector(".gallery").innerHTML = "";
+    genererProjets(objets);
+});
+
+// Hotels et Restaurants : f-4
+// On sélectionne la balise du bouton
+const boutonHotelsRestaurants = document.querySelector(".f-4");
+
+// on ajoute un eventListener sur le bouton puis on filtre sur la catégorie désirée les projet pour les afficher
+boutonHotelsRestaurants.addEventListener("click", function () {
+    const objets = projets.filter(projet => projet.categoryId === 3);
+    document.querySelector(".gallery").innerHTML = "";
+    genererProjets(objets);
+});
+
