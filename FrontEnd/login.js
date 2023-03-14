@@ -15,7 +15,14 @@ async function ajoutListenerConnexion() {
             headers: { "Content-Type": "application/json" },
             body: chargeUtile
         });
-        console.log((await reponse.json()).token);
+        // on stock le token contenu dans la reponse à notre requête http
+        const token = (await reponse.json()).token;
+        // on ajoute le token au local storage
+        localStorage.setItem('0',token);
+        // on redirige vers la page index.html si la requête retourne bien un token
+        if (localStorage.getItem('0') != null) {
+            window.location.replace("index.html");
+        }
     });
 }
 

@@ -176,6 +176,15 @@ li:hover {
 	color: #B1663C;
 }
 
+.nav-logout {
+	text-decoration: none;
+    color: black;
+}
+
+.nav-logout:hover {
+	color: #B1663C;
+}
+
 header {
 	margin-bottom: 150px;
 }

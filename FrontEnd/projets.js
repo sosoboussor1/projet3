@@ -25,6 +25,34 @@ export function genererProjets(projets) {
     }
 }
 
+// fonction retournant le status connecté ou non d'un user sur la page
+function userConnected () {
+    if (localStorage.getItem('0') != null) {
+        return true;
+    }
+}
+
+// fonction permettant d'afficher les éléments de modification
+function afficherModif() {
+    // affichage du bandeau noir et de logout à la place de login
+    if (userConnected()) {
+        document.getElementById('modif').style.display = 'flex';
+        document.getElementById('logout').style.display = 'block';
+        document.getElementById('login').style.display = 'none';
+    }
+}
+
+// fonction permettant de ne plus afficher les élément de modification
+function retirerModif() {
+    if (userConnected() === false) {
+        document.getElementById('modif').style.display = 'none';
+        document.getElementById('logout').style.display = 'block';
+        document.getElementById('login').style.display = 'none';
+    }
+}
+
+retirerModif();
+afficherModif();
 genererProjets(projets);
 
 // Boutons
@@ -71,5 +99,13 @@ boutonHotelsRestaurants.addEventListener("click", function () {
     const objets = projets.filter(projet => projet.categoryId === 3);
     document.querySelector(".gallery").innerHTML = "";
     genererProjets(objets);
+});
+
+// gestion du bouton logout
+const linkLogout = document.querySelector(".nav-logout");
+
+linkLogout.addEventListener("click", function () {
+    localStorage.clear();
+    location.reload();
 });
 
