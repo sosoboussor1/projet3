@@ -48,16 +48,68 @@ table {
 }
 /** end reset css**/
 body {
-	max-width: 1140px;
+	max-width: 1440px;
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
 header {
 	display: flex;
-	justify-content: space-between;
-	margin: 50px 0
+	flex-direction: column;
+	align-items: center;
 }
+
+.menu {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 50px;
+	margin-top: 38px;
+	width: 1140px;
+}
+
+.bandeau-modifs {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: black;
+    width: 1440px;
+    height: 59px;
+    align-items: center;
+    gap: 10px;
+}
+
+.bandeau-modifs p {
+    color: white;
+    font-family: 'Work Sans';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    padding-right: 10px;
+}
+
+.bandeau-modifs button {
+    height: 38px;
+    border-radius: 60px;
+    padding: 11px 23px;
+    color: black;
+    background-color: white;
+    border: none;
+    font-family: 'Work Sans';
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16.42px;
+}
+
+.bandeau-modifs i {
+    color: white;
+    font-size: 16px;
+}
+
+main {
+	width: 1140px;
+	margin: auto;
+}
+
 section {
 	margin: 50px 0
 }
@@ -343,5 +395,6 @@ footer nav ul {
 #login-form {
 	margin-bottom: 355px;
 }
+
 
 
