@@ -112,7 +112,7 @@ boutonHotelsRestaurants.addEventListener("click", function () {
     genererProjets(objets);
 });
 
-// gestion du bouton logout
+// gestion du lien logout
 const linkLogout = document.querySelector(".nav-logout");
 
 linkLogout.addEventListener("click", function () {

@@ -534,6 +534,24 @@ footer nav ul {
 	color: white;
 }
 
+.button-delete {
+	width: 17px;
+	height: 17px;
+	background-color: black;
+}
+
+.md1-link {
+	color: #D65353;
+	text-decoration: none;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 17px;
+}
+
+.md1-link:hover {
+	text-decoration: underline;
+}
+
 @keyframes fadeIn {
 	from {opacity: 0;}
 	to {opacity: 1;}

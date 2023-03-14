@@ -53,6 +53,7 @@ const projets = await getProjets();
 //affichage des éléments dans la grid de md1
 for (let i = 0; i < projets.length; i++) {
     const divGrid = document.createElement("div");
+    divGrid.id = projets[i].id;
     const imgDiv = document.createElement("img");
     imgDiv.src = projets[i].imageUrl;
     const editDiv = document.createElement("button");
