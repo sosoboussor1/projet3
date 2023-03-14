@@ -55,7 +55,7 @@
 			<div class="t-projet">
 				<h2>Mes Projets</h2>
 				<i id="i-projet" class="fa-regular fa-pen-to-square" style="display: none;"></i>
-				<a id="link-projet" href="#" style="display: none;">modifier</a>
+				<a id="link-projet" href="#modal1" style="display: none;" class="js-modal">modifier</a>
 			</div>
 			<div class="filtres">
 				<button class="filtre f-1" href="#">Tous</button>
@@ -80,6 +80,13 @@
 				<input class="bouton-contact" type="submit" value="Envoyer">
 			</form>
 		</section>
+		<aside id="modal1" class="modal" aria-hidden="true" role="dialog" style="display: none;">
+			<div class="modal-wrapper js-modal-stop">
+				<button class="js-modal-close">Fermer la boite modale</button>
+				<h1>Test</h1>
+			</div>
+		</aside>
+		<script type="module" src="modale.js"></script>
 	</main>
 
 	<footer>
