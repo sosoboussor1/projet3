@@ -1,4 +1,5 @@
 async function ajoutListenerConnexion() {
+    localStorage.clear();
     const formulaireConnexion = document.querySelector(".form-login");
     formulaireConnexion.addEventListener("submit", async function (e) {
         e.preventDefault();
@@ -18,13 +19,19 @@ async function ajoutListenerConnexion() {
         // on stock le token contenu dans la reponse à notre requête http
         const token = (await reponse.json()).token;
         // on ajoute le token au local storage
-        localStorage.setItem('0',token);
+        localStorage.setItem('0', token);
         // on redirige vers la page index.html si la requête retourne bien un token
-        if (localStorage.getItem('0') != null) {
+        if (reponse.status === 200) {
             window.location.replace("index.html");
+        } else {
+            afficherErreur();
         }
     });
 }
 
 ajoutListenerConnexion();
 
+// fonction permettant d'afficher un message d'erreur
+function afficherErreur() {
+    document.getElementById('red-error').style.display = 'block';
+}
