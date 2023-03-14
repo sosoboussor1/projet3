@@ -39,6 +39,8 @@ function afficherModif() {
         document.getElementById('modif').style.display = 'flex';
         document.getElementById('logout').style.display = 'block';
         document.getElementById('login').style.display = 'none';
+        document.getElementById('i-projet').style.display = 'block';
+        document.getElementById('link-projet').style.display = 'block';
     }
 }
 
@@ -48,6 +50,8 @@ function retirerModif() {
         document.getElementById('modif').style.display = 'none';
         document.getElementById('logout').style.display = 'block';
         document.getElementById('login').style.display = 'none';
+        document.getElementById('i-projet').style.display = 'none';
+        document.getElementById('link-projet').style.display = 'none';
     }
 }
 

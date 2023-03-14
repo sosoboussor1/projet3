@@ -218,8 +218,28 @@ header {
 
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+}
+
+.t-projet {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 	margin-bottom: 50px;
+	gap: 11px;
+}
+
+.t-projet i {
+	color: black;
+	font-size: 15px;
+	padding-left: 21px;
+}
+
+.t-projet a {
+	align-items: center;
+	font-size: 14px;
+	text-decoration: none;
+	color: black;
 }
 
 .filtres {
