@@ -452,12 +452,86 @@ footer nav ul {
 
 .modal-wrapper {
 	background-color: white;
-	width: 600px;
-	padding: 20px;
+	width: 420px;
+	height: 623px;
+	padding: 0px 105px;
+	padding-top: 60px;
+	padding-bottom: 48px;
 }
 
 .modal[aria-hidden="true"] {
 	animation: fadeOut .8s both;
+}
+
+.md1 {
+	flex-direction: column;
+	justify-content: center;
+}
+
+.grid-projets {
+	display: grid;
+	gap: 6px;
+	grid-template-columns: repeat(5, 1fr);
+	align-items: center;
+	margin-bottom: 31px;
+}
+
+.grid-projets img {
+	width: 78px;
+	height: 104px;
+}
+
+.md1 > h2 {
+	text-align: center;
+	margin-bottom: 46px;
+	font-size: 26px;
+	line-height: 30px;
+}
+
+.md1-line {
+	margin-bottom: 45px;
+}
+
+#add-photo-md1 {
+	margin-bottom: 23px;
+}
+
+.md1-link {
+	text-align: center;
+}
+
+#md1-close {
+	background-color: white;
+	margin-bottom: 16px;
+	border: none;
+	color: black;
+	text-align: right;
+    margin-right: -82px;
+    margin-top: -57px;
+}
+
+#md1-close i {
+	width: 12px;
+	height: 12px;
+}
+
+.grid-projets button {
+	border: none;
+	background-color: white;
+	font-size: 12px;
+	line-height: 14px;
+	font-weight: 400;
+	font-family: 'Work Sans';
+}
+
+.md1-line {
+	border-top: solid 1px;
+	width: 420px;
+	border-color: #B3B3B3;
+}
+
+.md1-line p {
+	color: white;
 }
 
 @keyframes fadeIn {

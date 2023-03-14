@@ -2,6 +2,13 @@
 const reponse = await fetch('http://localhost:5678/api/works/');
 const projets = await reponse.json();
 
+// Fonction permettant de récupérer tous les projets
+export async function getProjets() {
+    const reponse = await fetch('http://localhost:5678/api/works/');
+    const projets = await reponse.json();
+    return projets;
+}
+
 // Fonction permettant d'afficher d'afficher les projets dans la div 'gallery"
 export function genererProjets(projets) {
     // Boucle qui parcourt les projets
