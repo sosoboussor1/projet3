@@ -48,6 +48,7 @@ function afficherModif() {
         document.getElementById('login').style.display = 'none';
         document.getElementById('i-projet').style.display = 'block';
         document.getElementById('link-projet').style.display = 'block';
+        document.querySelector('#filtres').style.display = 'none';
     }
 }
 
@@ -59,6 +60,7 @@ function retirerModif() {
         document.getElementById('login').style.display = 'none';
         document.getElementById('i-projet').style.display = 'none';
         document.getElementById('link-projet').style.display = 'none';
+        document.querySelector('#filtres').style.display = 'flex';
     }
 }
 
