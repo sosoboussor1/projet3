@@ -28,6 +28,8 @@ const closeModal = function (e) {
     //modal.removeEventListener('click', closeModal);
     //modal.querySelector('.js-modal-close').removeEventListener('click', closeModal);
     modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation);
+    document.querySelector(".md-all").innerHTML = "";
+    document.querySelector(".md1").style.display = "flex";
 }
 
 // fonction permettant de ne pas quitter la modale lorsqu'on click dessus
@@ -58,8 +60,15 @@ function genererMd2 () {
     divIcones.appendChild(buttonMd2Return);
     divIcones.appendChild(md2Close);
 
-    document.querySelector('.modal-wrapper').appendChild(divIcones);
+    document.querySelector('.md-all').appendChild(divIcones);
 
+    // generation du titre de md2
+    const titreMd2 = document.createElement('h1');
+    titreMd2.className = "md2-titre";
+    titreMd2.innerText = "Ajout photo";
+    document.querySelector('.md-all').appendChild(titreMd2);
+    // generation du formulaire de md2
+    
 }
 
 // fonction permettant de générer la troisième fenêtre de la modale
@@ -96,10 +105,15 @@ for (let i = 0; i < projets.length; i++) {
 //gestion du bouton add-photo-md1
 document.getElementById('add-photo-md1').addEventListener('click', function () {
     //on vide la modale
-    document.querySelector('.modal-wrapper').innerHTML = " ";
+    document.querySelector('.md1').style.display = "none";
     //on génére la deuxième modale
     genererMd2();
     // on add un eventlistener sur le bouton close
     document.querySelector(".md2-close").addEventListener("click", closeModal);
+    // on add un event listener sur le bouton return
+    document.querySelector(".md2-return").addEventListener("click", function() {
+        document.querySelector(".md-all").innerHTML = "";
+        document.querySelector(".md1").style.display = "flex";
+    });
 });
 
