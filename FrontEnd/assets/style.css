@@ -467,6 +467,7 @@ footer nav ul {
 .md1 {
 	flex-direction: column;
 	justify-content: center;
+	align-items: center;
 }
 
 .grid-projets {
@@ -487,6 +488,9 @@ footer nav ul {
 	margin-bottom: 46px;
 	font-size: 26px;
 	line-height: 30px;
+	font-family: 'Work Sans';
+	color: black;
+	font-weight: 400;
 }
 
 .md1-line {
@@ -507,8 +511,9 @@ footer nav ul {
 	border: none;
 	color: black;
 	text-align: right;
-    margin-right: -82px;
+    margin-right: -581px;
     margin-top: -57px;
+	margin-bottom: 23px;
 }
 
 #md1-close i {
@@ -551,6 +556,18 @@ footer nav ul {
 
 .md1-link:hover {
 	text-decoration: underline;
+}
+
+#add-photo-md1 {
+	width: 237px;
+	height: 36px;
+	border: none;
+	background-color: #1D6154;
+	font-size: 14px;
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	border-radius: 60px;
 }
 
 @keyframes fadeIn {
