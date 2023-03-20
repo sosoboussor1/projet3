@@ -179,7 +179,93 @@ function genererMd3(titreProjet, categorieProjet, imgProjet) {
     //ajout du titre de md3
     const titreMd3 = document.createElement("h1");
     titreMd3.innerText = "Ajout photo";
+    titreMd3.className = "titreMd3";
     document.querySelector('.md-all').appendChild(titreMd3);
+
+    //ajout de la div contenant l'image du projet
+    const divImg = document.createElement("div");
+    divImg.className = "divImgMd3";
+    const imgProjetMd3 = document.createElement("img");
+    imgProjetMd3.className = "imgProjetMd3";
+    imgProjetMd3.src = imgProjet;
+    divImg.appendChild(imgProjetMd3);
+    document.querySelector('.md-all').appendChild(divImg);
+
+    //ajout du formulaire de modification
+    const formulaireModif = document.createElement("form");
+    formulaireModif.setAttribute("action", "post")
+
+    const labelTitre = document.createElement("label");
+    labelTitre.className = "lableTitreMd3";
+    labelTitre.setAttribute("for", "inputTitre");
+    labelTitre.innerText = "Titre";
+    const inputTitre = document.createElement("input");
+    inputTitre.id = "inputTitre";
+    inputTitre.setAttribute("name", "inputTitre");
+    inputTitre.setAttribute("type", "text");
+    inputTitre.setAttribute("value", titreProjet)
+
+    formulaireModif.appendChild(labelTitre);
+    formulaireModif.appendChild(inputTitre);
+
+    const labelCategory = document.createElement("label");
+    labelCategory.setAttribute("for", "categoryInput");
+    labelCategory.className = "categoryLabel";
+    labelCategory.innerText = "Catégorie";
+    labelCategory.setAttribute("for", "inputCategory");
+    const inputCategory = document.createElement("select");
+    inputCategory.setAttribute("id","inputCategory");
+    inputCategory.setAttribute("name","inputCategory");
+    if (categorieProjet === 1) {
+        const opt1 = document.createElement("option");
+        const opt2 = document.createElement("option");
+        const opt3 = document.createElement("option");
+        opt1.innerText = "Objets";
+        opt2.innerText = "Appartements";
+        opt3.innerText = "Hôtels & restaurants";
+        inputCategory.appendChild(opt1);
+        inputCategory.appendChild(opt2);
+        inputCategory.appendChild(opt3);
+    } else if (categorieProjet === 2) {
+        const opt1 = document.createElement("option");
+        const opt2 = document.createElement("option");
+        const opt3 = document.createElement("option");
+        opt1.innerText = "Objets";
+        opt2.innerText = "Appartements";
+        opt3.innerText = "Hôtels & restaurants";
+        inputCategory.appendChild(opt2);
+        inputCategory.appendChild(opt1);
+        inputCategory.appendChild(opt3);
+    } else if (categorieProjet === 3) {
+        const opt1 = document.createElement("option");
+        const opt2 = document.createElement("option");
+        const opt3 = document.createElement("option");
+        opt1.innerText = "Objets";
+        opt2.innerText = "Appartements";
+        opt3.innerText = "Hôtels & restaurants";
+        inputCategory.appendChild(opt3);
+        inputCategory.appendChild(opt2);
+        inputCategory.appendChild(opt1);
+    }
+
+    formulaireModif.appendChild(labelCategory);
+    formulaireModif.appendChild(inputCategory);
+
+    const md3Line = document.createElement("p");
+    md3Line.className = "md3-line";
+    md3Line.innerText = "p";
+    formulaireModif.appendChild(md3Line);
+
+    const submitFormulaireMd3 = document.createElement("input");
+    submitFormulaireMd3.className = "submit-form-md3";
+    submitFormulaireMd3.setAttribute("value", "Valider");
+    submitFormulaireMd3.setAttribute("type", "submit");
+    formulaireModif.appendChild(submitFormulaireMd3);
+
+    document.querySelector('.md-all').appendChild(formulaireModif);
+
+
+
 }
 
 //permet de sélection tous les lien qui sont censés ouvrir la modale puis ouverture de cette dernière
@@ -255,9 +341,15 @@ async function editer() {
                 document.querySelector(".md-all").innerHTML = "";
                 document.querySelector(".md1").style.display = "flex";
             });
+            document.querySelector(".submit-form-md3").addEventListener("click", function (e) {
+                e.preventDefault();
+            })
         });
     }
 }
+
+//gestion des boutons supprimer 
+
 
 // gestion de l'affichage de md3 en fonction du projet sélectionné
 const idProjet = await editer();
