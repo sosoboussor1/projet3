@@ -1,4 +1,4 @@
-import { getProjets,genererProjets } from "./projets.js";
+import { getProjets, genererProjets } from "./projets.js";
 
 let modal = null;
 
@@ -38,7 +38,7 @@ const stopPropagation = function (e) {
 }
 
 // fonction permettant de générer la deuxième fenêtre de la modale
-function genererMd2 () {
+function genererMd2() {
     // generation de la div contenant les bouton retour et close
     const divIcones = document.createElement('div');
     divIcones.className = "divIcones";
@@ -73,7 +73,7 @@ function genererMd2 () {
 
     const divForm = document.createElement('div');
     divForm.className = "divForm";
-    const iForm  = document.createElement('i');
+    const iForm = document.createElement('i');
     iForm.className = "fa-regular";
     iForm.classList.add("fa-image");
     divForm.appendChild(iForm);
@@ -85,7 +85,7 @@ function genererMd2 () {
     imgInput.accept = "image/*";
     imgInput.style.display = "none";
     const labelImg = document.createElement("label");
-    labelImg.setAttribute("for","imgButton");
+    labelImg.setAttribute("for", "imgButton");
     labelImg.className = "labelImg";
     labelImg.innerText = "+ Ajouter photo";
     divForm.appendChild(labelImg);
@@ -97,19 +97,19 @@ function genererMd2 () {
     divForm.appendChild(tailleMax);
 
     formulaireAjout.appendChild(divForm);
-    
+
 
     const titreInputLabel = document.createElement("label");
-    titreInputLabel.setAttribute("for","titreInput");
+    titreInputLabel.setAttribute("for", "titreInput");
     titreInputLabel.className = "titreInputLabel";
     titreInputLabel.innerText = "Titre";
     const categorieInputLabel = document.createElement("label");
-    categorieInputLabel.setAttribute("for","categorieInput");
+    categorieInputLabel.setAttribute("for", "categorieInput");
     categorieInputLabel.className = "categorieInputLabel";
     categorieInputLabel.innerText = "Catégorie";
     const titreInput = document.createElement("input");
-    titreInput.setAttribute("name","titreInput");
-    titreInput.setAttribute("type","text");
+    titreInput.setAttribute("name", "titreInput");
+    titreInput.setAttribute("type", "text");
     titreInput.id = "titreInput";
 
     formulaireAjout.appendChild(titreInputLabel);
@@ -117,7 +117,7 @@ function genererMd2 () {
 
     formulaireAjout.appendChild(categorieInputLabel);
     const categorieInput = document.createElement("select");
-    categorieInput.setAttribute("name","categorieInput");
+    categorieInput.setAttribute("name", "categorieInput");
     categorieInput.id = "categorieInput";
     const opt0 = document.createElement("option");
     const opt1 = document.createElement("option");
@@ -141,15 +141,46 @@ function genererMd2 () {
 
     const submitFormulaireMd2 = document.createElement("input");
     submitFormulaireMd2.className = "submit-form-md2";
-    submitFormulaireMd2.setAttribute("value","Valider");
-    submitFormulaireMd2.setAttribute("type","submit");
+    submitFormulaireMd2.setAttribute("value", "Valider");
+    submitFormulaireMd2.setAttribute("type", "submit");
     formulaireAjout.appendChild(submitFormulaireMd2);
 
     document.querySelector('.md-all').appendChild(formulaireAjout);
 }
 
 // fonction permettant de générer la troisième fenêtre de la modale
+function genererMd3(titreProjet, categorieProjet, imgProjet) {
+    document.querySelector('.md1').style.display = "none";
 
+    //generation bouttons return et close
+    // generation de la div contenant les bouton retour et close
+    const divIcones = document.createElement('div');
+    divIcones.className = "divIcones";
+
+    const md2Return = document.createElement('i');
+    md2Return.className = "fa-solid";
+    md2Return.classList.add("fa-arrow-left-long");
+    const buttonMd2Return = document.createElement('button');
+    buttonMd2Return.className = "md2-return";
+    buttonMd2Return.appendChild(md2Return);
+
+    const md2Close = document.createElement('button');
+    md2Close.className = "md2-close";
+    const iClose = document.createElement('i');
+    iClose.className = "fa-solid";
+    iClose.classList.add("fa-xmark");
+    md2Close.appendChild(iClose);
+
+    divIcones.appendChild(buttonMd2Return);
+    divIcones.appendChild(md2Close);
+
+    document.querySelector('.md-all').appendChild(divIcones);
+
+    //ajout du titre de md3
+    const titreMd3 = document.createElement("h1");
+    titreMd3.innerText = "Ajout photo";
+    document.querySelector('.md-all').appendChild(titreMd3);
+}
 
 //permet de sélection tous les lien qui sont censés ouvrir la modale puis ouverture de cette dernière
 document.querySelectorAll('.js-modal').forEach(a => {
@@ -157,7 +188,7 @@ document.querySelectorAll('.js-modal').forEach(a => {
 });
 
 // ajout un listener sur la touche ESC pour pouvoir quitter la modale à l'aide du clavier
-window.addEventListener('keydown', function(e) {
+window.addEventListener('keydown', function (e) {
     if (e.key === "Escape" || e.key === "Esc") {
         closeModal(e);
     }
@@ -174,6 +205,7 @@ for (let i = 0; i < projets.length; i++) {
     imgDiv.src = projets[i].imageUrl;
     const editDiv = document.createElement("button");
     editDiv.innerText = "éditer";
+    editDiv.className = `edit-button-${i}`;
     divGrid.appendChild(imgDiv);
     divGrid.appendChild(editDiv);
     document.querySelector(".grid-projets").appendChild(divGrid);
@@ -188,7 +220,7 @@ document.getElementById('add-photo-md1').addEventListener('click', async functio
     // on add un eventlistener sur le bouton close
     document.querySelector(".md2-close").addEventListener("click", closeModal);
     // on add un event listener sur le bouton return
-    document.querySelector(".md2-return").addEventListener("click", function() {
+    document.querySelector(".md2-return").addEventListener("click", function () {
         document.querySelector(".md-all").innerHTML = "";
         document.querySelector(".md1").style.display = "flex";
     });
@@ -205,4 +237,34 @@ document.getElementById('add-photo-md1').addEventListener('click', async functio
         genererProjets(projetsAJour);
     });
 });
+
+// gestion des boutons editer
+async function editer() {
+    let gridProjets = await getProjets();
+    for (let i = 0; i < gridProjets.length; i++) {
+        const nomClassBouton = `.edit-button-${i}`;
+        document.querySelector(nomClassBouton).addEventListener("click", function () {
+            const titreP = gridProjets[i].title;
+            const categorieP = gridProjets[i].categoryId;
+            const imgP = gridProjets[i].imageUrl;
+            genererMd3(titreP, categorieP, imgP);
+            // on add un eventlistener sur le bouton close
+            document.querySelector(".md2-close").addEventListener("click", closeModal);
+            // on add un event listener sur le bouton return
+            document.querySelector(".md2-return").addEventListener("click", function () {
+                document.querySelector(".md-all").innerHTML = "";
+                document.querySelector(".md1").style.display = "flex";
+            });
+        });
+    }
+}
+
+// gestion de l'affichage de md3 en fonction du projet sélectionné
+const idProjet = await editer();
+
+
+
+
+
+
 

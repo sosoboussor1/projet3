@@ -615,7 +615,7 @@ footer nav ul {
 	background-color: white;
 }
 
-.md2-titre {
+.md-all > h1 {
 	text-align: center;
     margin-left: -71px;
     font-family: 'Work Sans';
