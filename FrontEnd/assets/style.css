@@ -458,6 +458,7 @@ footer nav ul {
 	padding: 0px 105px;
 	padding-top: 60px;
 	padding-bottom: 48px;
+	border-radius: 10px;
 }
 
 .modal[aria-hidden="true"] {
@@ -572,13 +573,21 @@ footer nav ul {
 
 /* MD2 */
 .fa-image {
-	color: red;
+	color: #B9C5CC;
 	font-size: 58px;
+	margin-bottom: 20px;
+	margin-top: 19px;
 }
 
 .divForm {
 	display: flex;
 	flex-direction: column;
+	text-align: center;
+	height: 169px;
+	background-color: #E8F1F6;
+	border-radius: 3px;
+	margin-bottom: 30px;
+	align-items: center;
 }
 
 .md-all {
@@ -590,6 +599,102 @@ footer nav ul {
 	display: flex;
 	flex-direction: column;
 }
+
+.divIcones {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 566px;
+    margin-left: -71px;
+    margin-top: -30px;
+    margin-bottom: 40px;
+}
+
+.divIcones > button {
+	border: none;
+	background-color: white;
+}
+
+.md2-titre {
+	text-align: center;
+    margin-left: -71px;
+    font-family: 'Work Sans';
+    font-size: 26px;
+    font-weight: 400;
+    margin-bottom: 36px;
+    color: black;
+}
+
+.md-all > form {
+	width: 420px;
+}
+
+.labelImg {
+	width: 173px;
+	padding: 10px 0px;
+	border-radius: 50px;
+	background-color: #CBD6DC;
+	margin-bottom: 7px;
+	font-size: 14px;
+	font-family: 'Work Sans';
+	font-weight: 500;
+}
+
+.tailleMax {
+	font-size: 10px;
+	font-weight: 400;
+}
+
+.titreInputLabel {
+	font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.categorieInputLabel {
+	font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+#titreInput {
+	height: 50px;
+    border: none;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+    margin-bottom: 20px;
+}
+
+#categorieInput {
+	height: 50px;
+    border: none;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+    margin-bottom: 47px;
+	background-color: white;
+}
+
+#categorieInput:focus {
+	outline: none;
+}
+
+.md2-line {
+	border-top: solid 1px #B3B3B3;
+	color: white;
+	margin-bottom: 32px;
+}
+
+.submit-form-md2 {
+	width: 237px;
+    height: 36px;
+    margin: auto;
+    border: none;
+    border-radius: 60px;
+    font-family: 'Syne';
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+    background-color: #A7A7A7;
+}
+
 
 @keyframes fadeIn {
 	from {opacity: 0;}

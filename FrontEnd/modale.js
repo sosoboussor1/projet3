@@ -86,6 +86,7 @@ function genererMd2 () {
     imgInput.style.display = "none";
     const labelImg = document.createElement("label");
     labelImg.setAttribute("for","imgButton");
+    labelImg.className = "labelImg";
     labelImg.innerText = "+ Ajouter photo";
     divForm.appendChild(labelImg);
     divForm.appendChild(imgInput);
@@ -100,13 +101,16 @@ function genererMd2 () {
 
     const titreInputLabel = document.createElement("label");
     titreInputLabel.setAttribute("for","titreInput");
+    titreInputLabel.className = "titreInputLabel";
     titreInputLabel.innerText = "Titre";
     const categorieInputLabel = document.createElement("label");
     categorieInputLabel.setAttribute("for","categorieInput");
+    categorieInputLabel.className = "categorieInputLabel";
     categorieInputLabel.innerText = "Catégorie";
     const titreInput = document.createElement("input");
     titreInput.setAttribute("name","titreInput");
     titreInput.setAttribute("type","text");
+    titreInput.id = "titreInput";
 
     formulaireAjout.appendChild(titreInputLabel);
     formulaireAjout.appendChild(titreInput);
