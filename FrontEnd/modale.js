@@ -1,4 +1,4 @@
-import { getProjets } from "./projets.js";
+import { getProjets,genererProjets } from "./projets.js";
 
 let modal = null;
 
@@ -68,7 +68,80 @@ function genererMd2 () {
     titreMd2.innerText = "Ajout photo";
     document.querySelector('.md-all').appendChild(titreMd2);
     // generation du formulaire de md2
+    const formulaireAjout = document.createElement('form');
+    formulaireAjout.method = "post";
+
+    const divForm = document.createElement('div');
+    divForm.className = "divForm";
+    const iForm  = document.createElement('i');
+    iForm.className = "fa-regular";
+    iForm.classList.add("fa-image");
+    divForm.appendChild(iForm);
+
+    const imgInput = document.createElement("input");
+    imgInput.type = "file";
+    imgInput.id = "imgButton";
+    imgInput.name = "imgButton";
+    imgInput.accept = "image/*";
+    imgInput.style.display = "none";
+    const labelImg = document.createElement("label");
+    labelImg.setAttribute("for","imgButton");
+    labelImg.innerText = "+ Ajouter photo";
+    divForm.appendChild(labelImg);
+    divForm.appendChild(imgInput);
+
+    const tailleMax = document.createElement("p");
+    tailleMax.className = "tailleMax";
+    tailleMax.innerText = "jpg, png : 4mo max";
+    divForm.appendChild(tailleMax);
+
+    formulaireAjout.appendChild(divForm);
     
+
+    const titreInputLabel = document.createElement("label");
+    titreInputLabel.setAttribute("for","titreInput");
+    titreInputLabel.innerText = "Titre";
+    const categorieInputLabel = document.createElement("label");
+    categorieInputLabel.setAttribute("for","categorieInput");
+    categorieInputLabel.innerText = "Catégorie";
+    const titreInput = document.createElement("input");
+    titreInput.setAttribute("name","titreInput");
+    titreInput.setAttribute("type","text");
+
+    formulaireAjout.appendChild(titreInputLabel);
+    formulaireAjout.appendChild(titreInput);
+
+    formulaireAjout.appendChild(categorieInputLabel);
+    const categorieInput = document.createElement("select");
+    categorieInput.setAttribute("name","categorieInput");
+    categorieInput.id = "categorieInput";
+    const opt0 = document.createElement("option");
+    const opt1 = document.createElement("option");
+    const opt2 = document.createElement("option");
+    const opt3 = document.createElement("option");
+    opt0.innerText = " ";
+    opt1.innerText = "Objets";
+    opt2.innerText = "Appartements";
+    opt3.innerText = "Hôtels & restaurants";
+    categorieInput.appendChild(opt0);
+    categorieInput.appendChild(opt1);
+    categorieInput.appendChild(opt2);
+    categorieInput.appendChild(opt3);
+
+    formulaireAjout.appendChild(categorieInput);
+
+    const md2Line = document.createElement("p");
+    md2Line.className = "md2-line";
+    md2Line.innerText = "p";
+    formulaireAjout.appendChild(md2Line);
+
+    const submitFormulaireMd2 = document.createElement("input");
+    submitFormulaireMd2.className = "submit-form-md2";
+    submitFormulaireMd2.setAttribute("value","Valider");
+    submitFormulaireMd2.setAttribute("type","submit");
+    formulaireAjout.appendChild(submitFormulaireMd2);
+
+    document.querySelector('.md-all').appendChild(formulaireAjout);
 }
 
 // fonction permettant de générer la troisième fenêtre de la modale
@@ -103,7 +176,7 @@ for (let i = 0; i < projets.length; i++) {
 }
 
 //gestion du bouton add-photo-md1
-document.getElementById('add-photo-md1').addEventListener('click', function () {
+document.getElementById('add-photo-md1').addEventListener('click', async function () {
     //on vide la modale
     document.querySelector('.md1').style.display = "none";
     //on génére la deuxième modale
@@ -114,6 +187,18 @@ document.getElementById('add-photo-md1').addEventListener('click', function () {
     document.querySelector(".md2-return").addEventListener("click", function() {
         document.querySelector(".md-all").innerHTML = "";
         document.querySelector(".md1").style.display = "flex";
+    });
+    // on add un event listener sur le bouton submit
+    document.querySelector(".submit-form-md2").addEventListener("click", async function (e) {
+        e.preventDefault();
+        //on récupère les infos puis on les stocks dans la bdd
+
+        //on ferme la modal
+        closeModal(e);
+        //on vide la div avec tout les projets à jour puis on regénère la div avec la liste de projets à jour
+        const projetsAJour = await getProjets();
+        document.querySelector(".gallery").innerHTML = "";
+        genererProjets(projetsAJour);
     });
 });
 

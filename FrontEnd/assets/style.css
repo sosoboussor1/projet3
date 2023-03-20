@@ -570,6 +570,27 @@ footer nav ul {
 	border-radius: 60px;
 }
 
+/* MD2 */
+.fa-image {
+	color: red;
+	font-size: 58px;
+}
+
+.divForm {
+	display: flex;
+	flex-direction: column;
+}
+
+.md-all {
+	display: flex;
+	flex-direction: column;
+}
+
+.md-all form {
+	display: flex;
+	flex-direction: column;
+}
+
 @keyframes fadeIn {
 	from {opacity: 0;}
 	to {opacity: 1;}
