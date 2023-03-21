@@ -1,6 +1,7 @@
 import { getProjets, genererProjets } from "./projets.js";
 
 let modal = null;
+let count = 0;
 
 // fonction qui prend en entrée un évenement, permettant de sélectionner les lien modal afin d'afficher la modal
 const openModal = function (e) {
@@ -37,6 +38,36 @@ const stopPropagation = function (e) {
     e.stopPropagation();
 }
 
+//affichage des éléments dans la grid de md1
+async function genererGridMd1(count) {
+    if (count === 0) {
+        const projets = await getProjets();
+        for (let i = 0; i < projets.length; i++) {
+            const divGrid = document.createElement("div");
+            divGrid.id = projets[i].id;
+            divGrid.className = "divGrid";
+            divGrid.style.backgroundImage = `url(${projets[i].imageUrl})`;
+            //const imgDiv = document.createElement("img");
+            //imgDiv.src = projets[i].imageUrl;
+            const deleteButton = document.createElement("button");
+            deleteButton.className = `delete-button-${i}`;
+            deleteButton.classList.add("deleteButton");
+            const deleteIcone = document.createElement("i");
+            deleteIcone.className = "fa-solid";
+            deleteIcone.classList.add("fa-trash-can");
+            deleteButton.appendChild(deleteIcone);
+            divGrid.appendChild(deleteButton);
+            const editDiv = document.createElement("button");
+            editDiv.innerText = "éditer";
+            editDiv.className = `edit-button-${i}`;
+            editDiv.classList.add("editDiv");
+            //divGrid.appendChild(imgDiv);
+            divGrid.appendChild(editDiv);
+            document.querySelector(".grid-projets").appendChild(divGrid);
+        }
+        await editer();
+    }
+}
 // fonction permettant de générer la deuxième fenêtre de la modale
 function genererMd2() {
     // generation de la div contenant les bouton retour et close
@@ -95,7 +126,7 @@ function genererMd2() {
     tailleMax.className = "tailleMax";
     tailleMax.innerText = "jpg, png : 4mo max";
     divForm.appendChild(tailleMax);
-
+    openModal
     formulaireAjout.appendChild(divForm);
 
 
@@ -199,6 +230,7 @@ function genererMd3(titreProjet, categorieProjet, imgProjet) {
     labelTitre.className = "lableTitreMd3";
     labelTitre.setAttribute("for", "inputTitre");
     labelTitre.innerText = "Titre";
+    labelTitre.className = "labelTitreMd3";
     const inputTitre = document.createElement("input");
     inputTitre.id = "inputTitre";
     inputTitre.setAttribute("name", "inputTitre");
@@ -214,8 +246,8 @@ function genererMd3(titreProjet, categorieProjet, imgProjet) {
     labelCategory.innerText = "Catégorie";
     labelCategory.setAttribute("for", "inputCategory");
     const inputCategory = document.createElement("select");
-    inputCategory.setAttribute("id","inputCategory");
-    inputCategory.setAttribute("name","inputCategory");
+    inputCategory.setAttribute("id", "inputCategory");
+    inputCategory.setAttribute("name", "inputCategory");
     if (categorieProjet === 1) {
         const opt1 = document.createElement("option");
         const opt2 = document.createElement("option");
@@ -263,14 +295,15 @@ function genererMd3(titreProjet, categorieProjet, imgProjet) {
     formulaireModif.appendChild(submitFormulaireMd3);
 
     document.querySelector('.md-all').appendChild(formulaireModif);
-
-
-
 }
 
 //permet de sélection tous les lien qui sont censés ouvrir la modale puis ouverture de cette dernière
 document.querySelectorAll('.js-modal').forEach(a => {
     a.addEventListener("click", openModal);
+    a.addEventListener("click", async function () {
+        await genererGridMd1(count);
+        count++;
+    });
 });
 
 // ajout un listener sur la touche ESC pour pouvoir quitter la modale à l'aide du clavier
@@ -279,23 +312,6 @@ window.addEventListener('keydown', function (e) {
         closeModal(e);
     }
 });
-
-//import des projets pour pouvoir ensuite les afficher dans md1
-const projets = await getProjets();
-
-//affichage des éléments dans la grid de md1
-for (let i = 0; i < projets.length; i++) {
-    const divGrid = document.createElement("div");
-    divGrid.id = projets[i].id;
-    const imgDiv = document.createElement("img");
-    imgDiv.src = projets[i].imageUrl;
-    const editDiv = document.createElement("button");
-    editDiv.innerText = "éditer";
-    editDiv.className = `edit-button-${i}`;
-    divGrid.appendChild(imgDiv);
-    divGrid.appendChild(editDiv);
-    document.querySelector(".grid-projets").appendChild(divGrid);
-}
 
 //gestion du bouton add-photo-md1
 document.getElementById('add-photo-md1').addEventListener('click', async function () {
@@ -352,7 +368,7 @@ async function editer() {
 
 
 // gestion de l'affichage de md3 en fonction du projet sélectionné
-const idProjet = await editer();
+console.log(count);
 
 
 
