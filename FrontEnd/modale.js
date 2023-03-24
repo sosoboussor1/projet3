@@ -27,6 +27,9 @@ const openModal = function (e) {
 const closeModal = function (e) {
     if (modal === null) return;
     e.preventDefault();
+    document.querySelector(".md1").style.display = "flex";
+    document.querySelector(".md2").style.display = "none";
+    document.querySelector(".modal-wrapper").style.height = "730px";
     modal.style.display = "none";
     modal.setAttribute("aria-hidden", 'true');
     modal.removeAttribute("aria-modal");
@@ -83,7 +86,7 @@ function genererGridMd1(projets) {
 function addListenerSupr(projets) {
     for (let i = 0; i < projets.length; i++) {
         const idButton = `grid-button-delete-${i}`;
-        document.getElementById(idButton).addEventListener("click", function(e) {
+        document.getElementById(idButton).addEventListener("click", function (e) {
             e.preventDefault();
             console.log(i);
             ibutton[i] = i;
@@ -96,7 +99,7 @@ function addListenerSupr(projets) {
 function removeListenerSupr(projets) {
     for (let i = 0; i < projets.length; i++) {
         const idButton = `grid-button-delete-${i}`;
-        document.getElementById(idButton).removeEventListener("click", function(e) {
+        document.getElementById(idButton).removeEventListener("click", function (e) {
             e.preventDefault();
             console.log(i);
         })
@@ -118,21 +121,29 @@ document.querySelector(".add-md1").addEventListener("click", function () {
     document.querySelector(".grid-md1").innerHTML = "";
     document.querySelector(".md1").style.display = "none";
     document.querySelector(".md2").style.display = "flex";
+    document.querySelector(".modal-wrapper").style.height = "670px";
     // action du bouton fermer
     document.querySelector(".close-md2").addEventListener("click", function (e) {
         genererGridMd1(projets);
         document.querySelector(".md1").style.display = "flex";
         document.querySelector(".md2").style.display = "none";
+        document.querySelector(".modal-wrapper").style.height = "730px";
         closeModal(e);
     });
     // action du bouton retour
     document.querySelector(".return-md2").addEventListener("click", function (e) {
         document.querySelector(".grid-md1").innerHTML = "";
         genererGridMd1(projets);
+        document.querySelector(".modal-wrapper").style.height = "730px";
         document.querySelector(".md1").style.display = "flex";
         document.querySelector(".md2").style.display = "none";
     });
 
+});
+
+// gestion du submit md2
+document.querySelector(".submit-md2").addEventListener("click", function (e) {
+    e.preventDefault();
 });
 
 //gestion du bouton 'publier les changements'
@@ -150,19 +161,21 @@ document.querySelector(".publier-changements").addEventListener("click", async f
     //suppression avec un fetch des projets à supprimer
     if (tabASuppr != null) {
         //tabASuppr.forEach(async i => {
-            // requête DELETE vers l'api
-         //   const url = `http://localhost:5678/api/works/${i}`;
-          //  const reponse = await fetch(url,{
-          //      method: 'delete',
-          //      accept: '*/*',
-          //      Authorization: 'Bearer ' + window.localStorage.getItem('0')
-         //   });
-      //  })
-    }  
+        // requête DELETE vers l'api
+        //   const url = `http://localhost:5678/api/works/${i}`;
+        //  const reponse = await fetch(url,{
+        //      method: 'delete',
+        //      accept: '*/*',
+        //      Authorization: 'Bearer ' + window.localStorage.getItem('0')
+        //   });
+        //  })
+    }
     // création d'un array avec les projets à ajouter
     // ajout avec un fetch des projets à ajouter
     // création d'un array avec les projets à modifier
     // modif avec un fetch des projets à modifier
 })
+
+
 
 

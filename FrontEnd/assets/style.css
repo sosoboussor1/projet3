@@ -382,8 +382,8 @@ header {
 
 .gallery img {
 	width: 100%;
-    object-fit: contain;
-    height: 100%;
+	object-fit: contain;
+	height: 100%;
 }
 
 #contact {
@@ -564,7 +564,7 @@ footer nav ul {
 	display: flex;
 	justify-content: end;
 	align-self: flex-end;
-	margin-top: 32px;
+	margin-top: 27px;
 	margin-right: 36px;
 }
 
@@ -642,7 +642,7 @@ footer nav ul {
 	border-radius: 2px;
 }
 
-.grid-button-delete > i {
+.grid-button-delete>i {
 	color: white;
 	font-size: 8px;
 }
@@ -666,8 +666,127 @@ footer nav ul {
 }
 
 /* MD2 */
+.md2 {
+	flex-direction: column;
+	align-items: center;
+}
+
 .close-return-md2 {
 	display: flex;
 	justify-content: space-between;
+	width: 630px;
+	margin-bottom: 15px;
 }
+
+.close-return-md2>button {
+	padding: 0px;
+	background-color: white;
+	border: none;
+}
+
+.fa-xmark {
+	font-size: 18px;
+}
+
+.fa-arrow-left {
+	font-size: 23px;
+}
+
+.return-md2 {
+	margin-left: 30px;
+	margin-top: 30px;
+}
+
+.close-md2 {
+	margin-right: 36px;
+	margin-top: 27px;
+}
+
+.title-md2 {
+	margin-bottom: 35px;
+	color: black;
+	font-weight: 400;
+	font-size: 26px;
+	font-family: 'Work Sans';
+}
+
+.ajout-img-md2 {
+	width: 420px;
+	height: 170px;
+	background-color: #E8F1F6;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 30px;
+}
+
+.fa-image {
+	margin-bottom: 21px;
+	color: #B9C5CC;
+	font-size: 47px;
+}
+
+.label-img-md2 {
+	text-align: center;
+	padding: 10px 33px;
+	background-color: #CBD6DC;
+	border-radius: 50px;
+	color: #306685;
+	font-size: 14px;
+	font-weight: 500;
+	margin-bottom: 7px;
+}
+
+.info-img-md2 {
+	font-family: 'Work Sans';
+	font-size: 10px;
+	font-weight: 400;
+	text-align: center;
+}
+
+.form-md2 {
+	display: flex;
+    flex-direction: column;
+}
+
+.form-md2 label {
+	margin-bottom: 10px;
+}
+
+.input-title-md2 {
+	margin-bottom: 20px;
+	height: 51px;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.form-md2 > select {
+	margin-bottom: 45px;
+	height: 51px;
+	border: none;
+	background-color: white;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.line-md2 {
+	width: 420px;
+	color: white;
+	border-top: solid 1px #B3B3B3;
+	margin-bottom: 27px;
+}
+
+.submit-md2 {
+	padding: 10px 49px;
+	width: 237px;
+	background-color: #A7A7A7;
+	border: none;
+	border-radius: 60px;
+	margin: auto;
+	font-family: 'Syne';
+	font-size: 14px;
+	font-weight: 700;
+	color: white;
+}
+
 /* MD3 */
