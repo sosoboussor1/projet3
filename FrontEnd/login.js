@@ -29,7 +29,7 @@ async function ajoutListenerConnexion() {
     });
 }
 
-ajoutListenerConnexion();
+await ajoutListenerConnexion();
 
 // fonction permettant d'afficher un message d'erreur
 function afficherErreur() {

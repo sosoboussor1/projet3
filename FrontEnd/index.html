@@ -55,7 +55,7 @@
 			<div class="t-projet">
 				<h2>Mes Projets</h2>
 				<i id="i-projet" class="fa-regular fa-pen-to-square" style="display: none;"></i>
-				<a id="link-projet" style="display: none;">modifier</a>
+				<a id="link-projet" class="js-modal" href="#modal1" style="display: none;">modifier</a>
 			</div>
 			<div id="filtres" class="filtres" style="display: flex;">
 				<button class="filtre f-1" href="#">Tous</button>
@@ -81,7 +81,33 @@
 			</form>
 		</section>
 	</main>
+	<!-- Affichage des modales -->
+	<aside id="modal1" class="modal" aria-hidden="true" role="dialog" style="display: none;">
+		<div class="modal-wrapper js-modal-stop">
+			<div class="md1">
+				<div class="div-close-md1">
+					<button class="js-modal-close close-md1"><i class="fa-solid fa-xmark"></i></button>
+				</div>
+				<div class="contenu-md1">
+					<h2></h2>
+					<div class="grid-md1">
 
+					</div>
+					<p class="line-md1">p</p>
+					<button class="add-md1">Ajouter une photo</button>
+					<a class="delete-all-md1" href="#">Supprimer la galerie</a>
+				</div>
+			</div>
+			<div class="md2" style="display: none;">
+
+			</div>
+			<div class="md3" style="display: none;">
+
+			</div>
+
+		</div>
+	</aside>
+	<script type="module" src="modale.js"></script>
 	<footer>
 		<nav>
 			<ul>
