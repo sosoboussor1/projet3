@@ -555,6 +555,7 @@ footer nav ul {
 /* MD1 */
 .md1 {
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 }
 
@@ -562,6 +563,89 @@ footer nav ul {
 	display: flex;
 	justify-content: end;
 	align-self: flex-end;
+	margin-top: 32px;
+	margin-right: 36px;
 }
+
+.close-md1 {
+	border: none;
+	background-color: white;
+}
+
+.fa-xmark {
+	font-size: 13px;
+}
+
+.title-md1 {
+	margin-bottom: 46px;
+	font-family: 'Work Sans';
+	font-weight: 400;
+	font-size: 26px;
+	color: black;
+	margin-top: 16px;
+}
+
+.contenu-md1 {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.add-md1 {
+	width: 237px;
+	height: 36px;
+	background-color: #1D6154;
+	border-radius: 60px;
+	border: none;
+	font-size: 14px;
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	margin-bottom: 23px;
+	margin-top: 30px;
+}
+
+.line-md1 {
+	width: 420px;
+	color: white;
+	border-top: solid 1px #B3B3B3;
+	margin-top: 47px;
+}
+
+.grid-md1 {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	gap: 10px 6px;
+}
+
+.div-grid-button-delete {
+	display: flex;
+	justify-content: end;
+	width: 78px;
+	height: 104px;
+	background-size: contain;
+	margin-bottom: 2px;
+}
+
+.grid-button-delete {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: none;
+	background-color: black;
+	height: 17px;
+	width: 17px;
+	margin-right: 9px;
+	margin-top: 9px;
+	border-radius: 2px;
+}
+
+.grid-button-delete > i {
+	color: white;
+	font-size: 8px;
+}
+
+
 /* MD2 */
 /* MD3 */
