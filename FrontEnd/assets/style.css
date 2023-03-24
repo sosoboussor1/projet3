@@ -382,7 +382,8 @@ header {
 
 .gallery img {
 	width: 100%;
-
+    object-fit: contain;
+    height: 100%;
 }
 
 #contact {
@@ -646,6 +647,27 @@ footer nav ul {
 	font-size: 8px;
 }
 
+.edit-div {
+	text-decoration: none;
+	color: black;
+}
+
+.grid-md1 {
+	height: 381px;
+	overflow: auto;
+}
+
+.delete-all-md1 {
+	text-decoration: none;
+	color: #D65353;
+	font-family: 'Syne';
+	font-size: 14px;
+	font-weight: 400;
+}
 
 /* MD2 */
+.close-return-md2 {
+	display: flex;
+	justify-content: space-between;
+}
 /* MD3 */

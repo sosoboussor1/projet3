@@ -1,8 +1,12 @@
 let modal = null;
 
+
 // Récuperation des projets au format JSON
 let reponse = await fetch('http://localhost:5678/api/works/');
 let projets = await reponse.json();
+
+let ibutton = [];
+ibutton.length = projets.length;
 
 // Fonction permettant d'ouvrir la modale
 const openModal = function (e) {
@@ -15,6 +19,8 @@ const openModal = function (e) {
     modal.addEventListener("click", closeModal);
     modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
     modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
+    document.querySelector(".grid-md1").innerHTML = "";
+    genererGridMd1(projets);
 }
 
 // Fonction permettant de fermer la modale
@@ -27,6 +33,7 @@ const closeModal = function (e) {
     modal.removeEventListener("click", closeModal);
     modal.querySelector(".js-modal-close").removeEventListener("click", closeModal);
     modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
+    removeListenerSupr(projets);
     modal = null;
 }
 
@@ -36,7 +43,7 @@ const stopPropagation = function (e) {
 }
 
 // Fonction permettant de générer la grid de la fenêtre md1 de la modale
-function genererGridMd1 (projets) {
+function genererGridMd1(projets) {
     for (let i = 0; i < projets.length; i++) {
         // div globale
         const divGrid = document.createElement("div");
@@ -60,23 +67,102 @@ function genererGridMd1 (projets) {
         divGridButtonDelete.appendChild(gridButtonDelete);
 
         const editDiv = document.createElement("a");
-        editDiv.id = `${i}`;
-        editDiv.innerText = "éditer"; 
+        editDiv.setAttribute("href", "#");
+        editDiv.id = `${projets[i].id}`;
+        editDiv.className = "edit-div"
+        editDiv.innerText = "éditer";
 
         divGrid.appendChild(divGridButtonDelete);
         divGrid.appendChild(editDiv);
         document.querySelector(".grid-md1").appendChild(divGrid);
     }
+    addListenerSupr(projets);
 }
 
-genererGridMd1(projets);
+// fonction permettant d'ajouter des listener sur les boutons supprimer
+function addListenerSupr(projets) {
+    for (let i = 0; i < projets.length; i++) {
+        const idButton = `grid-button-delete-${i}`;
+        document.getElementById(idButton).addEventListener("click", function(e) {
+            e.preventDefault();
+            console.log(i);
+            ibutton[i] = i;
+            console.log(ibutton);
+        })
+    }
+}
+
+// fonction permettant de retirer les listener sur les boutons supprimer
+function removeListenerSupr(projets) {
+    for (let i = 0; i < projets.length; i++) {
+        const idButton = `grid-button-delete-${i}`;
+        document.getElementById(idButton).removeEventListener("click", function(e) {
+            e.preventDefault();
+            console.log(i);
+        })
+    }
+}
 
 // selection de tous les lien permettant d'ouvrir la modal + ajout d'un event permettant de l'ouvrir
 document.querySelectorAll(".js-modal").forEach(a => {
-    a.addEventListener("click",openModal);
+    a.addEventListener("click", openModal);
 });
 
 // PreventDefault sur le lien supprimer tous les projets
 document.querySelector(".delete-all-md1").addEventListener("click", function (e) {
     e.preventDefault();
 });
+
+// gestion du bouton d'ajout de photo + affichage de md2
+document.querySelector(".add-md1").addEventListener("click", function () {
+    document.querySelector(".grid-md1").innerHTML = "";
+    document.querySelector(".md1").style.display = "none";
+    document.querySelector(".md2").style.display = "flex";
+    // action du bouton fermer
+    document.querySelector(".close-md2").addEventListener("click", function (e) {
+        genererGridMd1(projets);
+        document.querySelector(".md1").style.display = "flex";
+        document.querySelector(".md2").style.display = "none";
+        closeModal(e);
+    });
+    // action du bouton retour
+    document.querySelector(".return-md2").addEventListener("click", function (e) {
+        document.querySelector(".grid-md1").innerHTML = "";
+        genererGridMd1(projets);
+        document.querySelector(".md1").style.display = "flex";
+        document.querySelector(".md2").style.display = "none";
+    });
+
+});
+
+//gestion du bouton 'publier les changements'
+document.querySelector(".publier-changements").addEventListener("click", async function (e) {
+    // on créé un array qui contiendra l'id de tous les projets à supprimer
+    let tabASuppr = [];
+    for (let i = 0; i < projets.length; i++) {
+        for (let j = 0; j < ibutton.length; j++) {
+            if (projets[i].id === ibutton[j]) {
+                tabASuppr.push(projets[i].id);
+            }
+        }
+    }
+    console.log(tabASuppr);
+    //suppression avec un fetch des projets à supprimer
+    if (tabASuppr != null) {
+        //tabASuppr.forEach(async i => {
+            // requête DELETE vers l'api
+         //   const url = `http://localhost:5678/api/works/${i}`;
+          //  const reponse = await fetch(url,{
+          //      method: 'delete',
+          //      accept: '*/*',
+          //      Authorization: 'Bearer ' + window.localStorage.getItem('0')
+         //   });
+      //  })
+    }  
+    // création d'un array avec les projets à ajouter
+    // ajout avec un fetch des projets à ajouter
+    // création d'un array avec les projets à modifier
+    // modif avec un fetch des projets à modifier
+})
+
+
