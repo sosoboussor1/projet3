@@ -1,5 +1,5 @@
 let modal = null;
-
+import { genererProjets,getProjets } from "./projets.js";
 
 // Récuperation des projets au format JSON
 let reponse = await fetch('http://localhost:5678/api/works/');
@@ -160,20 +160,28 @@ document.querySelector(".publier-changements").addEventListener("click", async f
     console.log(tabASuppr);
     //suppression avec un fetch des projets à supprimer
     if (tabASuppr != null) {
-        //tabASuppr.forEach(async i => {
-        // requête DELETE vers l'api
-        //   const url = `http://localhost:5678/api/works/${i}`;
-        //  const reponse = await fetch(url,{
-        //      method: 'delete',
-        //      accept: '*/*',
-        //      Authorization: 'Bearer ' + window.localStorage.getItem('0')
-        //   });
-        //  })
+        tabASuppr.forEach(async i => {
+            // requête DELETE vers l'api
+            const jwt = window.localStorage.getItem("0");
+            const url = `http://localhost:5678/api/works/${i}`;
+            const reponse = await fetch(url, {
+                headers: {
+                    Accept: "*/*",
+                    Authorization: "Bearer " + jwt
+                },
+                method: "DELETE"
+            })
+            console.log(reponse.status);
+        })
     }
     // création d'un array avec les projets à ajouter
     // ajout avec un fetch des projets à ajouter
     // création d'un array avec les projets à modifier
     // modif avec un fetch des projets à modifier
+    // regénération de la gallery
+    const projetsAJour = await getProjets();
+    document.querySelector(".gallery").innerHTML = "";
+    genererProjets(projetsAJour);
 })
 
 
