@@ -1,5 +1,5 @@
 let modal = null;
-import { genererProjets,getProjets } from "./projets.js";
+import { genererProjets, getProjets } from "./projets.js";
 
 // Récuperation des projets au format JSON
 let reponse = await fetch('http://localhost:5678/api/works/');
@@ -36,7 +36,6 @@ const closeModal = function (e) {
     modal.removeEventListener("click", closeModal);
     modal.querySelector(".js-modal-close").removeEventListener("click", closeModal);
     modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
-    removeListenerSupr(projets);
     modal = null;
 }
 
@@ -47,10 +46,11 @@ const stopPropagation = function (e) {
 
 // Fonction permettant de générer la grid de la fenêtre md1 de la modale
 function genererGridMd1(projets) {
+
     for (let i = 0; i < projets.length; i++) {
         // div globale
         const divGrid = document.createElement("div");
-        divGrid.id = `div-grid-${i}`;
+        divGrid.id = `div-grid-${projets[i].id}`;
         divGrid.classList.add("div-grid");
 
         // div avec le bouton delete
@@ -59,7 +59,7 @@ function genererGridMd1(projets) {
         divGridButtonDelete.style.backgroundImage = `url(${projets[i].imageUrl})`;
 
         const gridButtonDelete = document.createElement("button");
-        gridButtonDelete.id = `grid-button-delete-${i}`;
+        gridButtonDelete.id = `grid-button-delete-${projets[i].id}`;
         gridButtonDelete.className = "grid-button-delete";
 
         const iButtonDelete = document.createElement("i");
@@ -85,18 +85,34 @@ function genererGridMd1(projets) {
 // fonction permettant d'ajouter des listener sur les boutons supprimer
 function addListenerSupr(projets) {
     for (let i = 0; i < projets.length; i++) {
-        const idButton = `grid-button-delete-${i}`;
-        document.getElementById(idButton).addEventListener("click", function (e) {
+        const idButton = `grid-button-delete-${projets[i].id}`;
+        document.getElementById(idButton).addEventListener("click", async function (e) {
             e.preventDefault();
-            console.log(i);
-            ibutton[i] = i;
-            console.log(ibutton);
+            console.log(projets[i].id);
+            const jwt = window.localStorage.getItem("0");
+            const url = `http://localhost:5678/api/works/${projets[i].id}`;
+            const reponse = await fetch(url, {
+                headers: {
+                    Accept: "*/*",
+                    Authorization: "Bearer " + jwt
+                },
+                method: "DELETE"
+            })
+            console.log(reponse.status);
+            if (reponse.status == 204) {
+                projets.splice(i,1);
+                document.querySelector(".grid-md1").innerHTML = "";
+                genererGridMd1(projets);
+                document.querySelector(".gallery").innerHTML = "";
+                genererProjets(projets);
+            }
         })
     }
 }
 
+
 // fonction permettant de retirer les listener sur les boutons supprimer
-function removeListenerSupr(projets) {
+/*function removeListenerSupr(projets) {
     for (let i = 0; i < projets.length; i++) {
         const idButton = `grid-button-delete-${i}`;
         document.getElementById(idButton).removeEventListener("click", function (e) {
@@ -104,7 +120,7 @@ function removeListenerSupr(projets) {
             console.log(i);
         })
     }
-}
+}*/
 
 // selection de tous les lien permettant d'ouvrir la modal + ajout d'un event permettant de l'ouvrir
 document.querySelectorAll(".js-modal").forEach(a => {
@@ -146,43 +162,6 @@ document.querySelector(".submit-md2").addEventListener("click", function (e) {
     e.preventDefault();
 });
 
-//gestion du bouton 'publier les changements'
-document.querySelector(".publier-changements").addEventListener("click", async function (e) {
-    // on créé un array qui contiendra l'id de tous les projets à supprimer
-    let tabASuppr = [];
-    for (let i = 0; i < projets.length; i++) {
-        for (let j = 0; j < ibutton.length; j++) {
-            if (projets[i].id === ibutton[j]) {
-                tabASuppr.push(projets[i].id);
-            }
-        }
-    }
-    console.log(tabASuppr);
-    //suppression avec un fetch des projets à supprimer
-    if (tabASuppr != null) {
-        tabASuppr.forEach(async i => {
-            // requête DELETE vers l'api
-            const jwt = window.localStorage.getItem("0");
-            const url = `http://localhost:5678/api/works/${i}`;
-            const reponse = await fetch(url, {
-                headers: {
-                    Accept: "*/*",
-                    Authorization: "Bearer " + jwt
-                },
-                method: "DELETE"
-            })
-            console.log(reponse.status);
-        })
-    }
-    // création d'un array avec les projets à ajouter
-    // ajout avec un fetch des projets à ajouter
-    // création d'un array avec les projets à modifier
-    // modif avec un fetch des projets à modifier
-    // regénération de la gallery
-    const projetsAJour = await getProjets();
-    document.querySelector(".gallery").innerHTML = "";
-    genererProjets(projetsAJour);
-})
 
 
 
