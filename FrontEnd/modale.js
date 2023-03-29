@@ -153,18 +153,28 @@ document.querySelector(".add-md1").addEventListener("click", function () {
         document.querySelector(".md2").style.display = "none";
     });
     //action du bouton ajouter photo
-    document.querySelector(".form-md2").addEventListener("submit", function(e) {
+    document.querySelector(".form-md2").addEventListener("submit", async function(e) {
         e.preventDefault();
         // recupération des éléments de formulaire
         let imgInput = document.getElementById("img-md2");
         let titleInput = document.getElementById("title-md2");
         let categoryInput = document.getElementById("category-md2");
-        console.log(imgInput.value + " " + titleInput.value + " " + categoryInput.value);
+        // on détermine l'id de category
+        let categoryNumber;
+        if (categoryInput.value == "Objets"){
+            categoryNumber = 1;
+        } else if (categoryInput.value == "Appartements") {
+            categoryNumber = 2;
+        } else {
+            categoryNumber = 3;
+        }
+        console.log(imgInput.value + " " + titleInput.value + " " + categoryNumber);
         if (imgInput.value.length != 0 && titleInput.value != null && categoryInput.value != null) {
             //window.alert("Tous les champs n'ont pas été remplis !")
             //on calcule la taille de l'image téléchargée
-            const fsize = imgInput.files.item(0).size;
+            const fsize = imgInput.files[0].size;
             const file = Math.round((fsize / 1024));
+            console.log(imgInput.files[0]);
             // on continue le fetch si la taille du fichier est respectée
             if (file < 4096) {
                 // on fait un fetch en fonction de l'extension du fichier
@@ -172,16 +182,29 @@ document.querySelector(".add-md1").addEventListener("click", function () {
                 if (extension == "jpg" || extension == "jpeg") {
                     // on créé un objet contenant les infos du nouveau projet
                     const body = new FormData;
-                    body.append("image",imgInput.value + ";" + "type=image/jpeg");
+                    body.append("image",imgInput.files[0]);
                     body.append("title", titleInput.value);
-                    console.log(body.get("title"));
-                    console.log(body.get("image"));
+                    body.append("category",categoryNumber);
+                    console.log(body);
+                    //console.log(body.get("title"));
+                    //console.log(body.get("image"));
+                    // on fait un fetch POST vers l'API
+                    const jwt = window.localStorage.getItem("0");
+                    const reponse = await fetch("http://localhost:5678/api/works",{
+                        body: body,
+                        headers: {
+                            Authorization: "Bearer " + jwt
+                        },
+                        method: "POST"
+                    });
+                    console.log(reponse.status);
                 } else if (extension == "png") {
                     // on créé un objet contenant les infos du nouveau projet
                     const body = new FormData;
                     body.append("image",imgInput.value + ";" + "type=image/png");
                     body.append("title", titleInput.value);
-                    console.log(body);
+                    // on fait un fetch POST vers l'API
+
                 } else {
                     window.alert("Le fichier n'a pas la bonne extension");
                 }
