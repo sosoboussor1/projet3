@@ -108,14 +108,14 @@
 					<div class="ajout-img-md2">
 						<i class="fa-regular fa-image icone-img"></i>
 						<label class="label-img-md2" for="img-md2">+ Ajouter photo</label>
-						<input type="file" id="img-md2" name="img-md2" style="display: none;">
+						<input type="file" id="img-md2" name="img-md2" accept=".png,.jpg" style="display: none;">
 						<p class="info-img-md2">jpg, png : 4mo max</p>
 					</div>
 					<label class="label-title-md2" for="title-md2">Titre</label>
-					<input class="input-title-md2" type="text" name="title-md2" id="title-md2">
+					<input class="input-title-md2" type="text" name="title-md2" id="title-md2" required>
 					<label for="category-md2">Catégorie</label>
-					<select name="category-md2" id="category-md2">
-						<option></option>
+					<select name="category-md2" id="category-md2" required>
+						<option> </option>
 						<option>Objets</option>
 						<option>Appartements</option>
 						<option>Hôtels & restaurants</option>
@@ -125,7 +125,7 @@
 				</form>
 			</div>
 			<div class="md3" style="display: none;">
-				
+
 			</div>
 		</div>
 	</aside>

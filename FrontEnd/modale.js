@@ -88,7 +88,6 @@ function addListenerSupr(projets) {
         const idButton = `grid-button-delete-${projets[i].id}`;
         document.getElementById(idButton).addEventListener("click", async function (e) {
             e.preventDefault();
-            console.log(projets[i].id);
             const jwt = window.localStorage.getItem("0");
             const url = `http://localhost:5678/api/works/${projets[i].id}`;
             const reponse = await fetch(url, {
@@ -98,7 +97,6 @@ function addListenerSupr(projets) {
                 },
                 method: "DELETE"
             })
-            console.log(reponse.status);
             if (reponse.status == 204) {
                 projets.splice(i,1);
                 document.querySelector(".grid-md1").innerHTML = "";
@@ -154,13 +152,59 @@ document.querySelector(".add-md1").addEventListener("click", function () {
         document.querySelector(".md1").style.display = "flex";
         document.querySelector(".md2").style.display = "none";
     });
+    //action du bouton ajouter photo
+    document.querySelector(".form-md2").addEventListener("submit", function(e) {
+        e.preventDefault();
+        // recupération des éléments de formulaire
+        let imgInput = document.getElementById("img-md2");
+        let titleInput = document.getElementById("title-md2");
+        let categoryInput = document.getElementById("category-md2");
+        console.log(imgInput.value + " " + titleInput.value + " " + categoryInput.value);
+        if (imgInput.value.length != 0 && titleInput.value != null && categoryInput.value != null) {
+            //window.alert("Tous les champs n'ont pas été remplis !")
+            //on calcule la taille de l'image téléchargée
+            const fsize = imgInput.files.item(0).size;
+            const file = Math.round((fsize / 1024));
+            // on continue le fetch si la taille du fichier est respectée
+            if (file < 4096) {
+                // on fait un fetch en fonction de l'extension du fichier
+                const extension = imgInput.value.split('.').pop();
+                if (extension == "jpg" || extension == "jpeg") {
+                    // on créé un objet contenant les infos du nouveau projet
+                    const body = new FormData;
+                    body.append("image",imgInput.value + ";" + "type=image/jpeg");
+                    body.append("title", titleInput.value);
+                    console.log(body.get("title"));
+                    console.log(body.get("image"));
+                } else if (extension == "png") {
+                    // on créé un objet contenant les infos du nouveau projet
+                    const body = new FormData;
+                    body.append("image",imgInput.value + ";" + "type=image/png");
+                    body.append("title", titleInput.value);
+                    console.log(body);
+                } else {
+                    window.alert("Le fichier n'a pas la bonne extension");
+                }
+                console.log("fichier validé");                
+            } else {
+                window.alert("La taille de l'image dépasse 4mo")
+            }
+
+            // on vide les champs si jamais l'utilisateur souhaite refaire un envoie de formulaire
+            document.getElementById("img-md2").value = "";
+            document.getElementById("title-md2").value = "";
+            document.getElementById("category-md2").value = "";
+        } else {
+            window.alert("Tous les champs n'ont pas été remplis !");
+        }
+    });
 
 });
 
 // gestion du submit md2
-document.querySelector(".submit-md2").addEventListener("click", function (e) {
-    e.preventDefault();
-});
+//document.querySelector(".submit-md2").addEventListener("click", function (e) {
+//    e.preventDefault();
+//});
 
 
 

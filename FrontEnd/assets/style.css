@@ -627,6 +627,8 @@ footer nav ul {
 	height: 104px;
 	background-size: contain;
 	margin-bottom: 2px;
+	background-repeat: no-repeat;
+    background-position: center;
 }
 
 .grid-button-delete {
