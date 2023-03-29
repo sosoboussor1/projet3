@@ -9,7 +9,7 @@ let ibutton = [];
 ibutton.length = projets.length;
 
 // Fonction permettant d'ouvrir la modale
-const openModal = function (e) {
+const openModal = async function (e) {
     e.preventDefault();
     const target = document.querySelector(e.target.getAttribute("href"));
     target.style.display = null;
@@ -20,7 +20,7 @@ const openModal = function (e) {
     modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
     modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
     document.querySelector(".grid-md1").innerHTML = "";
-    genererGridMd1(projets);
+    await genererGridMd1(projets);
 }
 
 // Fonction permettant de fermer la modale
@@ -45,7 +45,7 @@ const stopPropagation = function (e) {
 }
 
 // Fonction permettant de générer la grid de la fenêtre md1 de la modale
-function genererGridMd1(projets) {
+async function genererGridMd1(projets) {
 
     for (let i = 0; i < projets.length; i++) {
         // div globale
@@ -79,11 +79,11 @@ function genererGridMd1(projets) {
         divGrid.appendChild(editDiv);
         document.querySelector(".grid-md1").appendChild(divGrid);
     }
-    addListenerSupr(projets);
+    await addListenerSupr(projets);
 }
 
 // fonction permettant d'ajouter des listener sur les boutons supprimer
-function addListenerSupr(projets) {
+async function addListenerSupr(projets) {
     for (let i = 0; i < projets.length; i++) {
         const idButton = `grid-button-delete-${projets[i].id}`;
         document.getElementById(idButton).addEventListener("click", async function (e) {
@@ -100,7 +100,7 @@ function addListenerSupr(projets) {
             if (reponse.status == 204) {
                 projets.splice(i,1);
                 document.querySelector(".grid-md1").innerHTML = "";
-                genererGridMd1(projets);
+                await genererGridMd1(projets);
                 document.querySelector(".gallery").innerHTML = "";
                 genererProjets(projets);
             }
@@ -137,17 +137,17 @@ document.querySelector(".add-md1").addEventListener("click", function () {
     document.querySelector(".md2").style.display = "flex";
     document.querySelector(".modal-wrapper").style.height = "670px";
     // action du bouton fermer
-    document.querySelector(".close-md2").addEventListener("click", function (e) {
-        genererGridMd1(projets);
+    document.querySelector(".close-md2").addEventListener("click", async function (e) {
+        await genererGridMd1(projets);
         document.querySelector(".md1").style.display = "flex";
         document.querySelector(".md2").style.display = "none";
         document.querySelector(".modal-wrapper").style.height = "730px";
         closeModal(e);
     });
     // action du bouton retour
-    document.querySelector(".return-md2").addEventListener("click", function (e) {
+    document.querySelector(".return-md2").addEventListener("click", async function (e) {
         document.querySelector(".grid-md1").innerHTML = "";
-        genererGridMd1(projets);
+        await genererGridMd1(projets);
         document.querySelector(".modal-wrapper").style.height = "730px";
         document.querySelector(".md1").style.display = "flex";
         document.querySelector(".md2").style.display = "none";
@@ -203,8 +203,20 @@ document.querySelector(".add-md1").addEventListener("click", function () {
                     const body = new FormData;
                     body.append("image",imgInput.value + ";" + "type=image/png");
                     body.append("title", titleInput.value);
+                    body.append("category",categoryNumber);
+                    console.log(body);
+                    //console.log(body.get("title"));
+                    //console.log(body.get("image"));
                     // on fait un fetch POST vers l'API
-
+                    const jwt = window.localStorage.getItem("0");
+                    const reponse = await fetch("http://localhost:5678/api/works",{
+                        body: body,
+                        headers: {
+                            Authorization: "Bearer " + jwt
+                        },
+                        method: "POST"
+                    });
+                    console.log(reponse.status);
                 } else {
                     window.alert("Le fichier n'a pas la bonne extension");
                 }
@@ -217,6 +229,12 @@ document.querySelector(".add-md1").addEventListener("click", function () {
             document.getElementById("img-md2").value = "";
             document.getElementById("title-md2").value = "";
             document.getElementById("category-md2").value = "";
+            const projetsAJour = await getProjets();
+            document.querySelector(".gallery").innerHTML = "";
+            genererProjets(projetsAJour);
+            document.querySelector(".grid-md1").innerHTML = "";
+            console.log(projetsAJour);
+            genererGridMd1(projetsAJour);
         } else {
             window.alert("Tous les champs n'ont pas été remplis !");
         }
