@@ -65,13 +65,11 @@ const addProjet = async function (e) {
     } else {
         categoryNumber = 3;
     }
-    console.log(imgInput.value + " " + titleInput.value + " " + categoryNumber);
     if (imgInput.value.length != 0 && titleInput.value != null && categoryInput.value != null) {
         //window.alert("Tous les champs n'ont pas été remplis !")
         //on calcule la taille de l'image téléchargée
         const fsize = imgInput.files[0].size;
         const file = Math.round((fsize / 1024));
-        console.log(imgInput.files[0]);
         // on continue le fetch si la taille du fichier est respectée
         if (file < 4096) {
             // on fait un fetch en fonction de l'extension du fichier
@@ -82,9 +80,6 @@ const addProjet = async function (e) {
                 body.append("image", imgInput.files[0]);
                 body.append("title", titleInput.value);
                 body.append("category", categoryNumber);
-                console.log(body);
-                //console.log(body.get("title"));
-                //console.log(body.get("image"));
                 // on fait un fetch POST vers l'API
                 const jwt = window.localStorage.getItem("0");
                 const reponse = await fetch("http://localhost:5678/api/works", {
@@ -94,16 +89,12 @@ const addProjet = async function (e) {
                     },
                     method: "POST"
                 });
-                console.log(reponse.status);
             } else if (extension == "png") {
                 // on créé un objet contenant les infos du nouveau projet
                 const body = new FormData;
                 body.append("image", imgInput.value + ";" + "type=image/png");
                 body.append("title", titleInput.value);
                 body.append("category", categoryNumber);
-                console.log(body);
-                //console.log(body.get("title"));
-                //console.log(body.get("image"));
                 // on fait un fetch POST vers l'API
                 const jwt = window.localStorage.getItem("0");
                 const reponse = await fetch("http://localhost:5678/api/works", {
@@ -113,11 +104,9 @@ const addProjet = async function (e) {
                     },
                     method: "POST"
                 });
-                console.log(reponse.status);
             } else {
                 window.alert("Le fichier n'a pas la bonne extension");
             }
-            console.log("fichier validé");
         } else {
             window.alert("La taille de l'image dépasse 4mo")
         }
@@ -199,18 +188,6 @@ async function addListenerSupr(projets) {
         })
     }
 }
-
-
-// fonction permettant de retirer les listener sur les boutons supprimer
-/*function removeListenerSupr(projets) {
-    for (let i = 0; i < projets.length; i++) {
-        const idButton = `grid-button-delete-${i}`;
-        document.getElementById(idButton).removeEventListener("click", function (e) {
-            e.preventDefault();
-            console.log(i);
-        })
-    }
-}*/
 
 // selection de tous les lien permettant d'ouvrir la modal + ajout d'un event permettant de l'ouvrir
 document.querySelectorAll(".js-modal").forEach(a => {
