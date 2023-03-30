@@ -20,7 +20,8 @@ const openModal = async function (e) {
     modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
     modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
     document.querySelector(".grid-md1").innerHTML = "";
-    await genererGridMd1(projets);
+    const p = await getProjets();
+    await genererGridMd1(p);
 }
 
 // Fonction permettant de fermer la modale
@@ -233,8 +234,7 @@ document.querySelector(".add-md1").addEventListener("click", function () {
             document.querySelector(".gallery").innerHTML = "";
             genererProjets(projetsAJour);
             document.querySelector(".grid-md1").innerHTML = "";
-            console.log(projetsAJour);
-            genererGridMd1(projetsAJour);
+            closeModal(e);
         } else {
             window.alert("Tous les champs n'ont pas été remplis !");
         }
