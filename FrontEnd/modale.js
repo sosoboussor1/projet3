@@ -50,6 +50,92 @@ const stopPropagation = function (e) {
     e.stopPropagation();
 }
 
+const addProjet = async function (e) {
+    e.preventDefault();
+    // recupération des éléments de formulaire
+    let imgInput = document.getElementById("img-md2");
+    let titleInput = document.getElementById("title-md2");
+    let categoryInput = document.getElementById("category-md2");
+    // on détermine l'id de category
+    let categoryNumber;
+    if (categoryInput.value == "Objets") {
+        categoryNumber = 1;
+    } else if (categoryInput.value == "Appartements") {
+        categoryNumber = 2;
+    } else {
+        categoryNumber = 3;
+    }
+    console.log(imgInput.value + " " + titleInput.value + " " + categoryNumber);
+    if (imgInput.value.length != 0 && titleInput.value != null && categoryInput.value != null) {
+        //window.alert("Tous les champs n'ont pas été remplis !")
+        //on calcule la taille de l'image téléchargée
+        const fsize = imgInput.files[0].size;
+        const file = Math.round((fsize / 1024));
+        console.log(imgInput.files[0]);
+        // on continue le fetch si la taille du fichier est respectée
+        if (file < 4096) {
+            // on fait un fetch en fonction de l'extension du fichier
+            const extension = imgInput.value.split('.').pop();
+            if (extension == "jpg" || extension == "jpeg") {
+                // on créé un objet contenant les infos du nouveau projet
+                const body = new FormData;
+                body.append("image", imgInput.files[0]);
+                body.append("title", titleInput.value);
+                body.append("category", categoryNumber);
+                console.log(body);
+                //console.log(body.get("title"));
+                //console.log(body.get("image"));
+                // on fait un fetch POST vers l'API
+                const jwt = window.localStorage.getItem("0");
+                const reponse = await fetch("http://localhost:5678/api/works", {
+                    body: body,
+                    headers: {
+                        Authorization: "Bearer " + jwt
+                    },
+                    method: "POST"
+                });
+                console.log(reponse.status);
+            } else if (extension == "png") {
+                // on créé un objet contenant les infos du nouveau projet
+                const body = new FormData;
+                body.append("image", imgInput.value + ";" + "type=image/png");
+                body.append("title", titleInput.value);
+                body.append("category", categoryNumber);
+                console.log(body);
+                //console.log(body.get("title"));
+                //console.log(body.get("image"));
+                // on fait un fetch POST vers l'API
+                const jwt = window.localStorage.getItem("0");
+                const reponse = await fetch("http://localhost:5678/api/works", {
+                    body: body,
+                    headers: {
+                        Authorization: "Bearer " + jwt
+                    },
+                    method: "POST"
+                });
+                console.log(reponse.status);
+            } else {
+                window.alert("Le fichier n'a pas la bonne extension");
+            }
+            console.log("fichier validé");
+        } else {
+            window.alert("La taille de l'image dépasse 4mo")
+        }
+
+        // on vide les champs si jamais l'utilisateur souhaite refaire un envoie de formulaire
+        document.getElementById("img-md2").value = "";
+        document.getElementById("title-md2").value = "";
+        document.getElementById("category-md2").value = "";
+        const projetsAJour = await getProjets();
+        document.querySelector(".gallery").innerHTML = "";
+        genererProjets(projetsAJour);
+        document.querySelector(".grid-md1").innerHTML = "";
+        closeModal(e);
+    } else {
+        window.alert("Tous les champs n'ont pas été remplis !");
+    }
+}
+
 // Fonction permettant de générer la grid de la fenêtre md1 de la modale
 async function genererGridMd1(projets) {
 
@@ -104,7 +190,7 @@ async function addListenerSupr(projets) {
                 method: "DELETE"
             })
             if (reponse.status == 204) {
-                projets.splice(i,1);
+                projets.splice(i, 1);
                 document.querySelector(".grid-md1").innerHTML = "";
                 await genererGridMd1(projets);
                 document.querySelector(".gallery").innerHTML = "";
@@ -143,7 +229,7 @@ document.querySelector(".add-md1").addEventListener("click", function () {
     document.querySelector(".md2").style.display = "flex";
     document.querySelector(".modal-wrapper").style.height = "670px";
     // affichage de la preview
-    document.getElementById("img-md2").addEventListener("change", function(e) {
+    document.getElementById("img-md2").addEventListener("change", function (e) {
         document.querySelector(".ajout-img-md2").style.backgroundImage = `url(${URL.createObjectURL(e.target.files[0])})`;
         document.querySelector(".icone-img").style.opacity = 0;
         document.querySelector(".label-img-md2").style.opacity = 0;
@@ -166,92 +252,7 @@ document.querySelector(".add-md1").addEventListener("click", function () {
         document.querySelector(".md2").style.display = "none";
     });
     //action du bouton ajouter photo
-    document.querySelector(".form-md2").addEventListener("submit", async function(e) {
-        e.preventDefault();
-        // recupération des éléments de formulaire
-        let imgInput = document.getElementById("img-md2");
-        let titleInput = document.getElementById("title-md2");
-        let categoryInput = document.getElementById("category-md2");
-        // on détermine l'id de category
-        let categoryNumber;
-        if (categoryInput.value == "Objets"){
-            categoryNumber = 1;
-        } else if (categoryInput.value == "Appartements") {
-            categoryNumber = 2;
-        } else {
-            categoryNumber = 3;
-        }
-        console.log(imgInput.value + " " + titleInput.value + " " + categoryNumber);
-        if (imgInput.value.length != 0 && titleInput.value != null && categoryInput.value != null) {
-            //window.alert("Tous les champs n'ont pas été remplis !")
-            //on calcule la taille de l'image téléchargée
-            const fsize = imgInput.files[0].size;
-            const file = Math.round((fsize / 1024));
-            console.log(imgInput.files[0]);
-            // on continue le fetch si la taille du fichier est respectée
-            if (file < 4096) {
-                // on fait un fetch en fonction de l'extension du fichier
-                const extension = imgInput.value.split('.').pop();
-                if (extension == "jpg" || extension == "jpeg") {
-                    // on créé un objet contenant les infos du nouveau projet
-                    const body = new FormData;
-                    body.append("image",imgInput.files[0]);
-                    body.append("title", titleInput.value);
-                    body.append("category",categoryNumber);
-                    console.log(body);
-                    //console.log(body.get("title"));
-                    //console.log(body.get("image"));
-                    // on fait un fetch POST vers l'API
-                    const jwt = window.localStorage.getItem("0");
-                    const reponse = await fetch("http://localhost:5678/api/works",{
-                        body: body,
-                        headers: {
-                            Authorization: "Bearer " + jwt
-                        },
-                        method: "POST"
-                    });
-                    console.log(reponse.status);
-                } else if (extension == "png") {
-                    // on créé un objet contenant les infos du nouveau projet
-                    const body = new FormData;
-                    body.append("image",imgInput.value + ";" + "type=image/png");
-                    body.append("title", titleInput.value);
-                    body.append("category",categoryNumber);
-                    console.log(body);
-                    //console.log(body.get("title"));
-                    //console.log(body.get("image"));
-                    // on fait un fetch POST vers l'API
-                    const jwt = window.localStorage.getItem("0");
-                    const reponse = await fetch("http://localhost:5678/api/works",{
-                        body: body,
-                        headers: {
-                            Authorization: "Bearer " + jwt
-                        },
-                        method: "POST"
-                    });
-                    console.log(reponse.status);
-                } else {
-                    window.alert("Le fichier n'a pas la bonne extension");
-                }
-                console.log("fichier validé");                
-            } else {
-                window.alert("La taille de l'image dépasse 4mo")
-            }
-
-            // on vide les champs si jamais l'utilisateur souhaite refaire un envoie de formulaire
-            document.getElementById("img-md2").value = "";
-            document.getElementById("title-md2").value = "";
-            document.getElementById("category-md2").value = "";
-            const projetsAJour = await getProjets();
-            document.querySelector(".gallery").innerHTML = "";
-            genererProjets(projetsAJour);
-            document.querySelector(".grid-md1").innerHTML = "";
-            closeModal(e);
-        } else {
-            window.alert("Tous les champs n'ont pas été remplis !");
-        }
-    });
-
+    document.querySelector(".form-md2").addEventListener("submit", addProjet);
 });
 
 // gestion du submit md2
