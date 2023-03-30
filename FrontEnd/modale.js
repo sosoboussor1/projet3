@@ -30,6 +30,11 @@ const closeModal = function (e) {
     e.preventDefault();
     document.querySelector(".md1").style.display = "flex";
     document.querySelector(".md2").style.display = "none";
+    document.querySelector(".ajout-img-md2").style.backgroundImage = "none";
+    document.getElementById("img-md2").value = "";
+    document.querySelector(".icone-img").style.opacity = 1;
+    document.querySelector(".label-img-md2").style.opacity = 1;
+    document.querySelector(".info-img-md2").style.opacity = 1;
     document.querySelector(".modal-wrapper").style.height = "730px";
     modal.style.display = "none";
     modal.setAttribute("aria-hidden", 'true');
@@ -137,6 +142,13 @@ document.querySelector(".add-md1").addEventListener("click", function () {
     document.querySelector(".md1").style.display = "none";
     document.querySelector(".md2").style.display = "flex";
     document.querySelector(".modal-wrapper").style.height = "670px";
+    // affichage de la preview
+    document.getElementById("img-md2").addEventListener("change", function(e) {
+        document.querySelector(".ajout-img-md2").style.backgroundImage = `url(${URL.createObjectURL(e.target.files[0])})`;
+        document.querySelector(".icone-img").style.opacity = 0;
+        document.querySelector(".label-img-md2").style.opacity = 0;
+        document.querySelector(".info-img-md2").style.opacity = 0;
+    });
     // action du bouton fermer
     document.querySelector(".close-md2").addEventListener("click", async function (e) {
         await genererGridMd1(projets);

@@ -792,4 +792,10 @@ footer nav ul {
 	color: white;
 }
 
+.ajout-img-md2 {
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
 /* MD3 */
