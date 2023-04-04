@@ -35,6 +35,7 @@ const closeModal = function (e) {
     document.querySelector(".icone-img").style.opacity = 1;
     document.querySelector(".label-img-md2").style.opacity = 1;
     document.querySelector(".info-img-md2").style.opacity = 1;
+    document.querySelector(".submit-md2").style.backgroundColor = "#A7A7A7";
     document.querySelector(".modal-wrapper").style.height = "730px";
     modal.style.display = "none";
     modal.setAttribute("aria-hidden", 'true');
@@ -221,16 +222,32 @@ document.querySelector(".add-md1").addEventListener("click", function () {
         closeModal(e);
     });
     // action du bouton retour
-    document.querySelector(".return-md2").addEventListener("click", async function (e) {
-        document.querySelector(".grid-md1").innerHTML = "";
-        await genererGridMd1(projets);
-        document.querySelector(".modal-wrapper").style.height = "730px";
-        document.querySelector(".md1").style.display = "flex";
-        document.querySelector(".md2").style.display = "none";
-    });
+    document.querySelector(".return-md2").addEventListener("click", returnButton);
     //action du bouton ajouter photo
     document.querySelector(".form-md2").addEventListener("submit", addProjet);
+    // passage du bouton valider en vert lorsqu'au moins un des champs est modifié 
+    document.getElementById("img-md2").addEventListener("change", function () {
+        document.querySelector(".submit-md2").style.backgroundColor = "#1D6154";
+    });
+    
+    document.getElementById("title-md2").addEventListener("change", function () {
+        document.querySelector(".submit-md2").style.backgroundColor = "#1D6154";
+    });
+    document.getElementById("category-md2").addEventListener("change", function () {
+        document.querySelector(".submit-md2").style.backgroundColor = "#1D6154";
+    });
 });
+
+const returnButton = async function (e) {
+    document.querySelector(".grid-md1").innerHTML = "";
+    const p = await getProjets();
+    console.log(p);
+    await genererGridMd1(p);
+    document.querySelector(".modal-wrapper").style.height = "730px";
+    document.querySelector(".md1").style.display = "flex";
+    document.querySelector(".md2").style.display = "none";
+    document.querySelector(".submit-md2").style.backgroundColor = "#A7A7A7";
+}
 
 // gestion du submit md2
 //document.querySelector(".submit-md2").addEventListener("click", function (e) {
